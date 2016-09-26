@@ -1,7 +1,7 @@
 /**
  * Cellulitis
  * by Thomas Willems
- * and Thomas den Boer hoi
+ * and Thomas den Boer
  */
 
 import java.util.*;
@@ -52,7 +52,7 @@ public class Cellulitis {
         //TODO read the initial configuration (build the first currentGeneration)
         Scanner sc = new Scanner ( System.in );
 
-        if ( sc.next().equals("init_start")) {
+        
             int t = 0;
             int[] a = new int[t];
             
@@ -66,7 +66,7 @@ public class Cellulitis {
             }
             
             System.out.println(a);
-        }
+        
        
          
 
