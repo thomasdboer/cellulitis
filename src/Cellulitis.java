@@ -9,16 +9,25 @@ import java.util.*;
 
 public class Cellulitis {
     boolean[] currentGeneration;
+    boolean[] newGeneration;
+    Scanner sc = new Scanner ( System.in );
 
     public void readGeneral() {
         //TODO read the general input (up to the initial configuration)
-        
-        Scanner sc = new Scanner ( System.in );
+
         String rule = sc.next();
         int l = sc.nextInt();
         int g = sc.nextInt();
         
+        currentGeneration = new boolean[l];
+        
         if (rule.equals ("A")) {
+            readInitial();
+            while (g>0) {
+                newCellValueByA();
+                computeNextGeneration();
+                g--;
+            }
             
         } 
         else if (rule.equals("B")) {
@@ -50,27 +59,13 @@ public class Cellulitis {
 
     public void readInitial() {
         //TODO read the initial configuration (build the first currentGeneration)
-        Scanner sc = new Scanner ( System.in );
-
-        
-            int t = 0;
-            int[] a = new int[t];
             
-            if (sc.hasNextInt() == true) {
-                for (int i = 0; i<t; i++) {
-                    a[i] = sc.nextInt();
-                    t++;
+        
+            while (sc.hasNextInt() == true) {
+                int k = sc.nextInt();
+                k = k-1;
+                currentGeneration[k] = true;
                 }
-          
-                        
-            }
-            
-            System.out.println(a);
-        
-       
-         
-
-
 
         //END TODO
     }
@@ -126,6 +121,8 @@ public class Cellulitis {
 
     public void computeNextGeneration() {
         //TODO compute the nextGeneration and update the currentGeneration.
+        
+        int k = currentGeneration.length;
 
 
 
