@@ -66,11 +66,6 @@ public class Cellulitis {
             System.out.println("Invalid value for G");
             System.exit(0);
         }
-        
-        
-
-
-
 
 
         //END TODO
@@ -80,12 +75,13 @@ public class Cellulitis {
     public void readInitial() {
         //TODO read the initial configuration (build the first currentGeneration)
             
-        
+        if (sc.next() == "init_start") {
             while (sc.hasNextInt() == true) {
                 int k = sc.nextInt();
                 k = k-1;
                 currentGeneration[k] = true;
                 }
+        }
 
         //END TODO
     }
@@ -100,13 +96,12 @@ public class Cellulitis {
     boolean newCellValueByA(int k) {
         // TODO return the value {true, false} of cell number k
         // for the next generation according to the rules of A
-        if (currentGeneration[k] == true) {
-                    
+        if ((currentGeneration[k] == true) && (currentGeneration[k+1] == true || currentGeneration[k-1] == true)) {
+            return true;                        
+        } else if ((currentGeneration[k]== false))
+            return false;            
         }
-        
-        
 
-        return false;
 
         //END TODO
     }
@@ -114,13 +109,9 @@ public class Cellulitis {
     boolean newCellValueByB(int k) {
         // TODO return the value {true, false} of cell number k
         // for the next generation according to the rules of B
-        if (currentGeneration[k] == true) {
-            
-        }
         
-
+        
         return false;
-
         //END TODO
     }
 
