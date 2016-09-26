@@ -17,20 +17,40 @@ public class Cellulitis {
 
         String rule = sc.next();
         int l = sc.nextInt();
-        int g = sc.nextInt();
+        int g = sc.nextInt();        
+        int k = 1; // Counts the cells (skips the first because it's always false
         
         currentGeneration = new boolean[l];
+        
+        //Add 2 extra cells to the generation and set both as false
+        l = l+2; 
+        currentGeneration[0] = false;
+        currentGeneration[l-1] = false;
+        
+        
         
         if (rule.equals ("A")) {
             readInitial();
             while (g>0) {
-                newCellValueByA();
+                while (k<l) {
+                    newCellValueByA(k);
+                    k++
+                }
                 computeNextGeneration();
                 g--;
             }
             
         } 
         else if (rule.equals("B")) {
+            readInitial();
+            while (g>0) {
+                while (k<l) {
+                    newCellValueByB(k);
+                    k++;
+                }
+                computeNextGeneration();
+                g--;
+            }
             
         } else {
             System.out.println("Invalid ruleset");
@@ -80,7 +100,9 @@ public class Cellulitis {
     boolean newCellValueByA(int k) {
         // TODO return the value {true, false} of cell number k
         // for the next generation according to the rules of A
-        
+        if (currentGeneration[k] == true) {
+                    
+        }
         
         
 
@@ -92,7 +114,9 @@ public class Cellulitis {
     boolean newCellValueByB(int k) {
         // TODO return the value {true, false} of cell number k
         // for the next generation according to the rules of B
-        
+        if (currentGeneration[k] == true) {
+            
+        }
         
 
         return false;
@@ -103,6 +127,8 @@ public class Cellulitis {
     boolean newCellValueByRules(int k){
         // TODO return the value {true, false} of cell number k
         // for the next generation according to the universal automatons rules
+        
+        
 
         return false;
 
