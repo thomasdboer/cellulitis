@@ -12,11 +12,12 @@ public class Cellulitis {
     boolean[] newGeneration;
     Scanner sc = new Scanner ( System.in );
     int g;
-
+    String rule;
+    
     public void readGeneral() {
         //TODO read the general input (up to the initial configuration)
 
-        String rule = sc.next();
+        rule = sc.next();
         int l = sc.nextInt();
         g = sc.nextInt();
         int h = g;        
@@ -30,36 +31,6 @@ public class Cellulitis {
         }
         
         
-        
-        if (rule.equals ("A")) {
-            readInitial();
-            while (g>0) {
-                while (k<l) {
-                    newGeneration[k] = newCellValueByA(k);
-                    k++;
-                }
-                computeNextGeneration();
-                g--;
-            }
-            g = h;
-            
-        } 
-        else if (rule.equals("B")) {
-            readInitial();
-            while (g>0) {
-                while (k<l) {
-                    newGeneration[k] = newCellValueByB(k);
-                    k++;
-                }
-                computeNextGeneration();
-                g--;
-            }
-            
-        } else {
-            System.out.println("Invalid ruleset");
-            System.exit(0);
-        }
-        
         if (l<0) {
             System.out.println("Invalid value for L");
             System.exit(0);
@@ -69,8 +40,7 @@ public class Cellulitis {
             System.out.println("Invalid value for G");
             System.exit(0);
         }
-
-
+        
         //END TODO
     }
 
@@ -83,7 +53,7 @@ public class Cellulitis {
         } else {
             while (sc.hasNextInt()) {
                 int k = sc.nextInt();
-                currentGeneration[k-1] = true;
+                currentGeneration[k] = true;
             }
         }
 
@@ -100,14 +70,23 @@ public class Cellulitis {
     boolean newCellValueByA(int k) {
         // TODO return the value {true, false} of cell number k
         // for the next generation according to the rules of A
-        if ((currentGeneration[k]) && (currentGeneration[k+1] || currentGeneration[k-1])) {
-            return true;                        
-        } else if ((!currentGeneration[k]) && (!currentGeneration[k-1] && !currentGeneration[k+1])) {
-            return false;
-        } else {
-            return true;
+        if (currentGeneration[k]) {
+            if (currentGeneration[k-1] ^ currentGeneration[k+1]) {
+                return true;
+            } else {
+                return false;
+            }
         }
-
+            
+        if (!currentGeneration[k]) {
+            if (!currentGeneration[k-1] && !currentGeneration[k+1]) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        
+        return false;
 
         //END TODO
     }
@@ -115,7 +94,21 @@ public class Cellulitis {
     boolean newCellValueByB(int k) {
         // TODO return the value {true, false} of cell number k
         // for the next generation according to the rules of B
-        
+        if (currentGeneration[k]) {
+            if (!currentGeneration[k+1]) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+            
+        if (!currentGeneration[k]) {
+            if (currentGeneration[k-1] ^ currentGeneration[k+1]) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         
         return false;
         //END TODO
@@ -146,8 +139,9 @@ public class Cellulitis {
                 System.out.print(" ");  
                 } 
             }
-        
+            computeNextGeneration();
             System.out.println("");
+            
         }
         
 
@@ -159,8 +153,28 @@ public class Cellulitis {
     public void computeNextGeneration() {
         //TODO compute the nextGeneration and update the currentGeneration.
         
+        int k = 1;
         int l = currentGeneration.length;
-        int k = 0;
+        l = l - 1;
+        
+        
+        if (rule.equals ("A")) {
+            while (k<l) {
+            newGeneration[k] = newCellValueByA(k);
+            k++;
+            }
+        } else if (rule.equals("B")) {
+            while (k<l) {
+            newGeneration[k] = newCellValueByB(k);
+            k++;
+            }  
+        } else {
+            System.out.println("Invalid ruleset");
+            System.exit(0);
+        }
+
+        k = 1;
+        
         while (k<(l)) {
             currentGeneration[k] = newGeneration[k];
             k++;
@@ -174,7 +188,9 @@ public class Cellulitis {
     public void run() {
         //TODO implement the procedure for the assignment
         readGeneral();
+        readInitial();
         draw();
+        computeNextGeneration();
         //END TODO
     }
 
